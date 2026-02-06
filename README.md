@@ -10,22 +10,24 @@ Team Arion's URL shortening web infrastructure.
 > Changes usually appear after the next deploy finishes.
 
 > [!NOTE]
-> This service is for Team Arion members only. 
+> This service is for Team Arion members only.
 
 ## Overview
-This repo builds a static short link site for Cloudflare Pages. Redirects are defined in `shortlinks/links.yaml` and compiled into a router page at the repo root plus a lookup table in `shortlinks/links.json` by `shortlinks/build.py`.
-
-It also contains a standalone outbound warning page in `outbound/` that is not part of the shortlink build.
+This repo builds a static short link router plus outbound warning pages for Cloudflare Pages. Redirects are defined in `shortlinks/links.yaml` and compiled into `dist/` by `shortlinks/build.py`.
 
 ## Project Layout
 - `shortlinks/links.yaml` Redirect definitions.
 - `shortlinks/build.py` Build script.
-- `shortlinks/templates/index.html` HTML template for the router page.
-- `shortlinks/links.json` Generated lookup table.
-- `index.html` Router page (generated at repo root).
-- `_redirects` Cloudflare Pages rewrite rules (generated at repo root).
-- `.github/workflows/deploy.yml` GitHub Actions deploy workflow.
-- `outbound/index.html` External redirect warning page (standalone).
+- `shortlinks/templates/router.html` Router page template.
+- `shortlinks/templates/outbound.html` Outbound warning template.
+- `shortlinks/templates/generate.html` Generator template.
+- `shortlinks/assets/site.css` Shared theme styles.
+- `shortlinks/assets/router.js` Router logic.
+- `shortlinks/assets/outbound.js` Outbound warning logic.
+- `shortlinks/assets/generate.js` Generator logic.
+- `outbound/logo.png` Logo source for outbound pages.
+- `dist/` Build output (generated).
+- `.github/workflows/deploy.yml` GitHub Actions workflow.
 
 ## Requirements
 - Python 3.11+
@@ -41,9 +43,9 @@ pip install -r shortlinks/requirements.txt
 python shortlinks/build.py
 ```
 
-3. Open a generated page (example):
+3. Inspect output:
 ```bash
-ls shortlinks/dist
+ls dist
 ```
 
 ## Managing Links
@@ -59,7 +61,7 @@ instagram:
 ```
 
 Rules:
-- Each key is the short code (e.g. `home` becomes `/<code>/index.html`).
+- Each key is the short code (e.g. `home` becomes `/home`).
 - `url` is required.
 - `title` is optional; if omitted, the page title defaults to `Redirecting`.
 
@@ -67,15 +69,19 @@ After editing `links.yaml`, rerun the build.
 
 ## Build Output
 The build produces:
-- `index.html` Router page that reads the URL path.
-- `shortlinks/links.json` Lookup table generated from `links.yaml`.
-- `_redirects` Rewrite rules for Cloudflare Pages.
+- `dist/index.html` Router page that reads the URL path.
+- `dist/links.json` Lookup table generated from `links.yaml`.
+- `dist/assets/` Shared CSS/JS assets.
+- `dist/outbound/index.html` Outbound warning page.
+- `dist/outbound/generate/index.html` Outbound link generator.
+- `dist/outbound/logo.png` (if `outbound/logo.png` exists).
+- `dist/_redirects` Rewrite rules for Cloudflare Pages.
 
 Example:
 - `home` becomes `https://go.teamarion.org/home` via the router page.
 
 ## Deployment (Cloudflare Pages)
-Cloudflare builds and serves the repo root. GitHub Actions can still run the build for CI validation, but it does not deploy.
+Cloudflare builds and serves `dist/`. GitHub Actions can still run the build for CI validation, but it does not deploy.
 
 Workflow highlights:
 - Installs Python dependencies
@@ -84,12 +90,10 @@ Workflow highlights:
 Cloudflare Pages settings:
 - Framework preset: `None`
 - Build command: `pip install -r shortlinks/requirements.txt && python shortlinks/build.py`
-- Build output directory: `.`
+- Build output directory: `dist`
 - Root directory (advanced): leave blank
 
 ## Outbound Warning
-The outbound warning page is a static artifact in `outbound/` and does not require GitHub Actions.
-
 Usage:
 - `https://go.teamarion.org/outbound/<encoded-url>`
 - Example: `https://go.teamarion.org/outbound/https%3A%2F%2Fexample.com`
@@ -102,12 +106,12 @@ Generator:
 - `https://go.teamarion.org/outbound/generate`
 
 ## Local Validation
-To verify output after a build, check that each generated page contains:
-- A meta refresh redirect
-- A canonical link
-- A fallback link in the body
-- A title
+To verify output after a build, confirm these files exist in `dist/`:
+- `index.html`
+- `links.json`
+- `_redirects`
+- `assets/site.css`
 
 ## Troubleshooting
 - If YAML is invalid, `build.py` exits with a clear error message.
-- If no links are defined, the build completes with an empty `shortlinks/dist`.
+- If no links are defined, the build completes with an empty lookup table.

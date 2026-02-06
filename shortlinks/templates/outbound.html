@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Leaving Team Arion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css">
+  </head>
+  <body>
+    <main class="card">
+      <img class="logo" src="{{logo_url}}" alt="Team Arion">
+      <h1>You are leaving Team Arion’s website</h1>
+      <div class="body-copy">
+        You are about to visit an external website that is not operated or controlled by Team Arion.
+      </div>
+
+      <div class="label">Destination:</div>
+      <div class="domain" id="dest-domain">Unknown</div>
+      <div class="url" id="dest-url">Provide a valid destination.</div>
+
+      <div class="actions">
+        <a class="btn btn-primary" id="continue" href="#" aria-disabled="true">Continue to site</a>
+        <a class="btn btn-secondary" href="https://www.teamarion.org">Go back</a>
+      </div>
+    </main>
+
+    <script src="/assets/outbound.js" defer></script>
+  </body>
+</html>

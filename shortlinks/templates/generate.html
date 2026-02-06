@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Outbound Link Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css">
+  </head>
+  <body>
+    <main class="card">
+      <img class="logo" src="{{logo_url}}" alt="Team Arion">
+      <h1>Outbound Link Generator</h1>
+      <p>Paste a destination URL to generate a safe outbound warning link.</p>
+
+      <label class="label" for="destination">Destination URL</label>
+      <input class="input-field" id="destination" type="url" placeholder="https://example.com" autocomplete="off" />
+
+      <div class="output" id="output">Enter a destination to generate a link.</div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="copy" disabled>Copy link</button>
+        <a class="btn btn-secondary" id="visit" href="#" aria-disabled="true">Open link</a>
+      </div>
+      <div class="hint">Links update instantly and are safe to share.</div>
+    </main>
+
+    <script src="/assets/generate.js" defer></script>
+  </body>
+</html>
