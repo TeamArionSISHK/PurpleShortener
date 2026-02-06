@@ -70,6 +70,16 @@ Workflow highlights:
 - Installs Python dependencies
 - Runs `shortlinks/build.py`
 
+Cloudflare Pages settings:
+- Framework preset: `None`
+- Build command: `pip install -r shortlinks/requirements.txt && python shortlinks/build.py`
+- Build output directory: `.`
+- Root directory (advanced): leave blank
+
+> **Tip (Non-Technical TL;DR)**  
+> Edit `shortlinks/links.yaml`, push to `main`, and wait a few minutes for Cloudflare to rebuild.  
+> Changes usually appear after the next deploy finishes.
+
 ## Outbound Warning (Standalone)
 The outbound warning page is a static, standalone artifact in `outbound/` and does not require GitHub Actions.
 
