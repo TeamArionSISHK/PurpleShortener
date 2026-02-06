@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-import html
-import os
+import json
 import shutil
 import sys
 from pathlib import Path
@@ -9,7 +8,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent
 LINKS_PATH = ROOT / "links.yaml"
-TEMPLATE_PATH = ROOT / "templates" / "redirect.html"
+TEMPLATE_PATH = ROOT / "templates" / "index.html"
 DIST_DIR = ROOT / "dist"
 
 
@@ -50,12 +49,6 @@ def load_links() -> dict:
     return links
 
 
-def render(template: str, url: str, title: str) -> str:
-    safe_url = html.escape(url, quote=True)
-    safe_title = html.escape(title, quote=True)
-    return template.replace("{{url}}", safe_url).replace("{{title}}", safe_title)
-
-
 def build() -> None:
     if not TEMPLATE_PATH.exists():
         die(f"Missing template {TEMPLATE_PATH}")
@@ -67,12 +60,14 @@ def build() -> None:
         shutil.rmtree(DIST_DIR)
     DIST_DIR.mkdir(parents=True, exist_ok=True)
 
-    for code, entry in links.items():
-        title = entry["title"] or "Redirecting"
-        content = render(template, entry["url"], title)
-        out_dir = DIST_DIR / code
-        out_dir.mkdir(parents=True, exist_ok=True)
-        (out_dir / "index.html").write_text(content, encoding="utf-8")
+    json_data = json.dumps(links, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    (DIST_DIR / "links.json").write_text(json_data, encoding="utf-8")
+
+    index_html = template.replace("{{links_json}}", json_data)
+    (DIST_DIR / "index.html").write_text(index_html, encoding="utf-8")
+
+    redirects = "/links.json /links.json 200\\n/* /index.html 200\\n"
+    (DIST_DIR / "_redirects").write_text(redirects, encoding="utf-8")
 
 
 if __name__ == "__main__":
