@@ -94,6 +94,27 @@
         code = "";
       }
 
+      if (code === "outbound") {
+        const params = new URLSearchParams(window.location.search);
+        const toParam = params.get("to");
+        const rest = rawPath.slice("outbound".length).replace(/^\/+/, "");
+
+        if (toParam) {
+          window.location.replace(`/outbound/index.html?to=${toParam}`);
+          return;
+        }
+        if (!rest) {
+          window.location.replace("/outbound/index.html");
+          return;
+        }
+        if (rest === "generate" || rest.startsWith("generate/")) {
+          window.location.replace("/outbound/generate/index.html");
+          return;
+        }
+        window.location.replace(`/outbound/index.html?to=${rest}`);
+        return;
+      }
+
       const showError = (message) => {
         document.title = "Link not found";
         titleEl.textContent = "Link not found";
