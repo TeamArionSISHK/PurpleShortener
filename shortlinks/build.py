@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 import json
-import shutil
 import sys
 from pathlib import Path
 
 import yaml
 
 ROOT = Path(__file__).resolve().parent
+SITE_ROOT = ROOT.parent
 LINKS_PATH = ROOT / "links.yaml"
 TEMPLATE_PATH = ROOT / "templates" / "index.html"
-DIST_DIR = ROOT / "dist"
+LINKS_JSON_PATH = ROOT / "links.json"
 
 
 def die(message: str) -> None:
@@ -56,18 +56,18 @@ def build() -> None:
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
     links = load_links()
 
-    if DIST_DIR.exists():
-        shutil.rmtree(DIST_DIR)
-    DIST_DIR.mkdir(parents=True, exist_ok=True)
-
     json_data = json.dumps(links, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-    (DIST_DIR / "links.json").write_text(json_data, encoding="utf-8")
+    LINKS_JSON_PATH.write_text(json_data, encoding="utf-8")
 
-    index_html = template.replace("{{links_json}}", json_data)
-    (DIST_DIR / "index.html").write_text(index_html, encoding="utf-8")
+    index_html = template.replace("{{links_url}}", "/shortlinks/links.json")
+    (SITE_ROOT / "index.html").write_text(index_html, encoding="utf-8")
 
-    redirects = "/links.json /links.json 200\\n/* /index.html 200\\n"
-    (DIST_DIR / "_redirects").write_text(redirects, encoding="utf-8")
+    redirects = (
+        "/shortlinks/links.json /shortlinks/links.json 200\\n"
+        "/outbound/* /outbound/index.html 200\\n"
+        "/* /index.html 200\\n"
+    )
+    (SITE_ROOT / "_redirects").write_text(redirects, encoding="utf-8")
 
 
 if __name__ == "__main__":

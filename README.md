@@ -2,7 +2,7 @@
 Team Arion's URL shortening web infrastructure.
 
 ## Overview
-This repo builds a static short link site for Cloudflare Pages. Redirects are defined in `shortlinks/links.yaml` and compiled into a single static router page plus a lookup table in `shortlinks/dist` by `shortlinks/build.py`.
+This repo builds a static short link site for Cloudflare Pages. Redirects are defined in `shortlinks/links.yaml` and compiled into a router page at the repo root plus a lookup table in `shortlinks/links.json` by `shortlinks/build.py`.
 
 It also contains a standalone outbound warning page in `outbound/` that is not part of the shortlink build.
 
@@ -10,7 +10,9 @@ It also contains a standalone outbound warning page in `outbound/` that is not p
 - `shortlinks/links.yaml` Redirect definitions.
 - `shortlinks/build.py` Build script.
 - `shortlinks/templates/index.html` HTML template for the router page.
-- `shortlinks/dist/` Build output (generated).
+- `shortlinks/links.json` Generated lookup table.
+- `index.html` Router page (generated at repo root).
+- `_redirects` Cloudflare Pages rewrite rules (generated at repo root).
 - `.github/workflows/deploy.yml` GitHub Actions deploy workflow.
 - `outbound/index.html` External redirect warning page (standalone).
 
@@ -54,9 +56,9 @@ After editing `links.yaml`, rerun the build.
 
 ## Build Output
 The build produces:
-- `shortlinks/dist/index.html` Router page that reads the URL path.
-- `shortlinks/dist/links.json` Lookup table generated from `links.yaml`.
-- `shortlinks/dist/_redirects` Rewrite rules for Cloudflare Pages.
+- `index.html` Router page that reads the URL path.
+- `shortlinks/links.json` Lookup table generated from `links.yaml`.
+- `_redirects` Rewrite rules for Cloudflare Pages.
 
 Example:
 - `home` becomes `https://go.teamarion.org/home` via the router page.

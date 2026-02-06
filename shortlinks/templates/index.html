@@ -42,21 +42,11 @@
       </p>
     </main>
 
-    <script id="links-data" type="application/json">{{links_json}}</script>
     <script>
-      const dataEl = document.getElementById("links-data");
       const titleEl = document.getElementById("title");
       const messageTextEl = document.getElementById("message-text");
       const fallbackEl = document.getElementById("fallback");
-
-      let links = {};
-      try {
-        links = JSON.parse(dataEl.textContent);
-      } catch (error) {
-        titleEl.textContent = "Configuration error";
-        messageTextEl.textContent = "Link data is unavailable.";
-        fallbackEl.style.display = "none";
-      }
+      const linksUrl = "{{links_url}}";
 
       const rawPath = window.location.pathname.replace(/^\/+|\/+$/g, "");
       let code = rawPath.split("/")[0];
@@ -66,18 +56,40 @@
         code = "";
       }
 
-      const entry = links[code];
-      if (entry && entry.url) {
-        const title = entry.title || "Redirecting";
-        document.title = title;
-        titleEl.textContent = title;
-        fallbackEl.href = entry.url;
-        window.location.replace(entry.url);
-      } else {
+      const showError = (message) => {
         document.title = "Link not found";
         titleEl.textContent = "Link not found";
-        messageTextEl.textContent = "This short link does not exist.";
+        messageTextEl.textContent = message;
         fallbackEl.style.display = "none";
+      };
+
+      if (!code) {
+        showError("No short code provided.");
+      } else {
+        fetch(linksUrl, { cache: "no-store" })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to load link data");
+            }
+            return response.json();
+          })
+          .then((links) => {
+            const entry = links[code];
+            if (entry && entry.url) {
+              const title = entry.title || "Redirecting";
+              document.title = title;
+              titleEl.textContent = title;
+              fallbackEl.href = entry.url;
+              window.location.replace(entry.url);
+            } else {
+              showError("This short link does not exist.");
+            }
+          })
+          .catch(() => {
+            titleEl.textContent = "Configuration error";
+            messageTextEl.textContent = "Link data is unavailable.";
+            fallbackEl.style.display = "none";
+          });
       }
     </script>
   </body>
