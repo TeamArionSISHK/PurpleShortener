@@ -28,6 +28,9 @@
   --gradient-start: #5431db;
   --gradient-end: #6a4fd2;
   --dark-bg: #1e1f3a;
+  --radius-card: 16px;
+  --radius-control: 10px;
+  --radius-pill: 10px;
 }
 
 * {
@@ -54,7 +57,7 @@ body {
   background: linear-gradient(135deg, rgba(84, 49, 219, 0.25), rgba(106, 79, 210, 0.15));
   border: 1px solid rgba(92, 62, 216, 0.45);
   box-shadow: 0 20px 50px rgba(10, 10, 30, 0.45);
-  border-radius: 24px;
+  border-radius: var(--radius-card);
   padding: 32px;
   backdrop-filter: blur(8px);
 }
@@ -150,7 +153,7 @@ p {
   appearance: none;
   border: 0;
   padding: 12px 20px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
@@ -188,7 +191,7 @@ p {
 .input-field {
   width: 100%;
   padding: 14px 16px;
-  border-radius: 14px;
+  border-radius: var(--radius-control);
   border: 1px solid rgba(92, 62, 216, 0.55);
   background: rgba(22, 22, 44, 0.6);
   color: #f6f4ff;
@@ -202,14 +205,18 @@ p {
 }
 
 .output {
-  margin-top: 20px;
+  margin-top: 12px;
   padding: 14px 16px;
-  border-radius: 14px;
+  border-radius: var(--radius-control);
   border: 1px dashed rgba(44, 211, 255, 0.5);
   background: rgba(30, 31, 58, 0.7);
   word-break: break-all;
   font-size: 15px;
   color: rgba(246, 244, 255, 0.9);
+}
+
+.form-group {
+  margin-top: 18px;
 }
 
 .hint {
