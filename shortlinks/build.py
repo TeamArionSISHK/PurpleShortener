@@ -64,6 +64,8 @@ def build() -> None:
 
     redirects = (
         "/shortlinks/links.json /shortlinks/links.json 200\\n"
+        "/outbound/generate /outbound/generate/index.html 200\\n"
+        "/outbound/generate/* /outbound/generate/index.html 200\\n"
         "/outbound/* /outbound/index.html 200\\n"
         "/* /index.html 200\\n"
     )

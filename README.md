@@ -87,8 +87,12 @@ Cloudflare Pages settings:
 - Build output directory: `.`
 - Root directory (advanced): leave blank
 
-## Outbound Warning (Standalone)
-The outbound warning page is a static, standalone artifact in `outbound/` and does not require GitHub Actions.
+> **Tip (Non-Technical TL;DR)**  
+> Edit `shortlinks/links.yaml`, push to `main`, and wait a few minutes for Cloudflare to rebuild.  
+> Changes usually appear after the next deploy finishes.
+
+## Outbound Warning
+The outbound warning page is a static artifact in `outbound/` and does not require GitHub Actions.
 
 Usage:
 - `https://go.teamarion.org/outbound/<encoded-url>`
@@ -97,6 +101,9 @@ Usage:
 Notes:
 - The page only allows `http` and `https` destinations.
 - `?to=` query parameter is also supported as a fallback.
+
+Generator:
+- `https://go.teamarion.org/outbound/generate`
 
 ## Local Validation
 To verify output after a build, check that each generated page contains:
