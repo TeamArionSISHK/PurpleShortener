@@ -11,7 +11,7 @@ It also contains a standalone outbound warning page in `outbound/` that is not p
 - `shortlinks/build.py` Build script.
 - `shortlinks/templates/redirect.html` HTML template for redirects.
 - `shortlinks/dist/` Build output (generated).
-- `shortlinks/.github/workflows/deploy.yml` GitHub Actions deploy workflow.
+- `.github/workflows/deploy.yml` GitHub Actions deploy workflow.
 - `outbound/index.html` External redirect warning page (standalone).
 
 ## Requirements
@@ -73,7 +73,7 @@ Required GitHub secrets:
 - `CF_API_TOKEN`
 - `CF_ACCOUNT_ID`
 
-Set the Cloudflare Pages project name in `shortlinks/.github/workflows/deploy.yml` (`projectName`).
+Set the Cloudflare Pages project name in `.github/workflows/deploy.yml` (`projectName`).
 
 ## Outbound Warning (Standalone)
 The outbound warning page is a static, standalone artifact in `outbound/` and does not require GitHub Actions.
