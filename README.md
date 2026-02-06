@@ -5,7 +5,7 @@ Team Arion's URL shortening web infrastructure.
 > ***How to use?***
 > 
 > **Short links:** Edit `shortlinks/links.yaml`, push to `main`, and wait a few minutes for Cloudflare to rebuild.  
-> **Outbound links:** Use `https://go.teamarion.org/outbound/?to=<URL>` to generate a site-leaving warning page.
+> **Outbound links:** Use `https://go.teamarion.org/outbound/generate` to generate a site-leaving warning page.
 > 
 > Changes usually appear after the next deploy finishes.
 
@@ -86,10 +86,6 @@ Cloudflare Pages settings:
 - Build command: `pip install -r shortlinks/requirements.txt && python shortlinks/build.py`
 - Build output directory: `.`
 - Root directory (advanced): leave blank
-
-> **Tip (Non-Technical TL;DR)**  
-> Edit `shortlinks/links.yaml`, push to `main`, and wait a few minutes for Cloudflare to rebuild.  
-> Changes usually appear after the next deploy finishes.
 
 ## Outbound Warning
 The outbound warning page is a static artifact in `outbound/` and does not require GitHub Actions.
