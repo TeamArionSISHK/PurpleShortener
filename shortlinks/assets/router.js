@@ -1,7 +1,9 @@
 (() => {
   const titleEl = document.getElementById("title");
+  const messageEl = document.getElementById("message");
   const messageTextEl = document.getElementById("message-text");
   const fallbackEl = document.getElementById("fallback");
+  const statusEl = document.getElementById("status");
   const script = document.currentScript || document.querySelector("script[data-links-url]");
 
   const linksUrl = (script && script.dataset.linksUrl) || "/links.json";
@@ -11,6 +13,16 @@
     document.title = "Link not found";
     titleEl.textContent = "Link not found";
     messageTextEl.textContent = message;
+    if (messageEl) messageEl.classList.remove("hidden");
+    if (statusEl) statusEl.classList.add("hidden");
+    fallbackEl.style.display = "none";
+  };
+
+  const showStatus = () => {
+    document.title = "Team Arion Short Links";
+    titleEl.textContent = "Team Arion Short Links";
+    if (messageEl) messageEl.classList.add("hidden");
+    if (statusEl) statusEl.classList.remove("hidden");
     fallbackEl.style.display = "none";
   };
 
@@ -62,7 +74,7 @@
   }
 
   if (!code) {
-    showError("No short code provided.");
+    showStatus();
     return;
   }
 
