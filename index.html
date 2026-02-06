@@ -4,37 +4,75 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Redirecting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+      :root {
+        --brand-purple: #5c3ed8;
+        --ice-blue: #2cd3ff;
+        --gradient-start: #5431db;
+        --gradient-end: #6a4fd2;
+        --dark-bg: #1e1f3a;
+      }
+      * {
+        box-sizing: border-box;
+      }
       body {
         margin: 0;
-        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-        color: #1a1a1a;
-        background: #f7f7fb;
+        min-height: 100vh;
+        font-family: "Barlow Semi Condensed", system-ui, -apple-system, sans-serif;
+        color: #f6f4ff;
+        background:
+          radial-gradient(900px 400px at 10% 10%, rgba(44, 211, 255, 0.18), transparent 60%),
+          radial-gradient(800px 500px at 90% 20%, rgba(92, 62, 216, 0.25), transparent 60%),
+          var(--dark-bg);
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 100vh;
+        padding: 32px 20px;
       }
-      main {
-        padding: 24px;
+      .card {
+        width: min(640px, 100%);
+        background: linear-gradient(135deg, rgba(84, 49, 219, 0.25), rgba(106, 79, 210, 0.15));
+        border: 1px solid rgba(92, 62, 216, 0.45);
+        box-shadow: 0 20px 50px rgba(10, 10, 30, 0.45);
+        border-radius: 24px;
+        padding: 32px;
+        backdrop-filter: blur(8px);
         text-align: center;
-        max-width: 520px;
+      }
+      .logo {
+        width: min(140px, 40vw);
+        height: auto;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto 18px;
       }
       h1 {
         margin: 0 0 12px;
-        font-size: 24px;
+        font-size: clamp(24px, 4vw, 30px);
+        font-weight: 700;
+        letter-spacing: 0.3px;
       }
       p {
         margin: 0;
-        color: #4a4a4a;
+        color: rgba(246, 244, 255, 0.8);
+        font-size: 16px;
       }
       a {
-        color: #5c3ed8;
+        color: var(--ice-blue);
+      }
+      @media (max-width: 520px) {
+        .card {
+          padding: 26px 22px;
+        }
       }
     </style>
   </head>
   <body>
-    <main>
+    <main class="card">
+      <img class="logo" src="/outbound/logo.png" alt="Team Arion">
       <h1 id="title">Redirecting</h1>
       <p id="message">
         <span id="message-text">If you are not redirected,</span>
