@@ -60,15 +60,15 @@ def render(template: str, values: dict) -> str:
 
 
 def build() -> None:
-    router_template = TEMPLATES_DIR / \"router.html\"
-    outbound_template = TEMPLATES_DIR / \"outbound.html\"
-    generate_template = TEMPLATES_DIR / \"generate.html\"
+    router_template = TEMPLATES_DIR / "router.html"
+    outbound_template = TEMPLATES_DIR / "outbound.html"
+    generate_template = TEMPLATES_DIR / "generate.html"
 
     for path in (router_template, outbound_template, generate_template):
         if not path.exists():
-            die(f\"Missing template {path}\")
+            die(f"Missing template {path}")
     if not ASSETS_DIR.exists():
-        die(f\"Missing assets directory {ASSETS_DIR}\")
+        die(f"Missing assets directory {ASSETS_DIR}")
 
     links = load_links()
 
@@ -76,55 +76,55 @@ def build() -> None:
         shutil.rmtree(DIST_DIR)
     DIST_DIR.mkdir(parents=True, exist_ok=True)
 
-    json_data = json.dumps(links, ensure_ascii=False, separators=(\",\", \":\")).replace(\"</\", \"<\\\\/\")
-    (DIST_DIR / \"links.json\").write_text(json_data, encoding=\"utf-8\")
+    json_data = json.dumps(links, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    (DIST_DIR / "links.json").write_text(json_data, encoding="utf-8")
 
-    shutil.copytree(ASSETS_DIR, DIST_DIR / \"assets\")
+    shutil.copytree(ASSETS_DIR, DIST_DIR / "assets")
 
-    logo_url = \"/outbound/logo.png\"
-    (DIST_DIR / \"index.html\").write_text(
+    logo_url = "/outbound/logo.png"
+    (DIST_DIR / "index.html").write_text(
         render(
-            router_template.read_text(encoding=\"utf-8\"),
-            {\"links_url\": \"/links.json\", \"logo_url\": logo_url},
+            router_template.read_text(encoding="utf-8"),
+            {"links_url": "/links.json", "logo_url": logo_url},
         ),
-        encoding=\"utf-8\",
+        encoding="utf-8",
     )
 
-    outbound_dir = DIST_DIR / \"outbound\"
+    outbound_dir = DIST_DIR / "outbound"
     outbound_dir.mkdir(parents=True, exist_ok=True)
-    (outbound_dir / \"index.html\").write_text(
+    (outbound_dir / "index.html").write_text(
         render(
-            outbound_template.read_text(encoding=\"utf-8\"),
-            {\"logo_url\": logo_url},
+            outbound_template.read_text(encoding="utf-8"),
+            {"logo_url": logo_url},
         ),
-        encoding=\"utf-8\",
+        encoding="utf-8",
     )
 
-    generate_dir = outbound_dir / \"generate\"
+    generate_dir = outbound_dir / "generate"
     generate_dir.mkdir(parents=True, exist_ok=True)
-    (generate_dir / \"index.html\").write_text(
+    (generate_dir / "index.html").write_text(
         render(
-            generate_template.read_text(encoding=\"utf-8\"),
-            {\"logo_url\": logo_url},
+            generate_template.read_text(encoding="utf-8"),
+            {"logo_url": logo_url},
         ),
-        encoding=\"utf-8\",
+        encoding="utf-8",
     )
 
     if LOGO_SRC.exists():
-        shutil.copy2(LOGO_SRC, outbound_dir / \"logo.png\")
+        shutil.copy2(LOGO_SRC, outbound_dir / "logo.png")
 
     redirects = (
-        \"/links.json /links.json 200\\n\"
-        \"/shortlinks/links.json /links.json 200\\n\"
-        \"/outbound/generate /outbound/generate/index.html 200\\n\"
-        \"/outbound/generate/ /outbound/generate/index.html 200\\n\"
-        \"/outbound/generate/* /outbound/generate/index.html 200\\n\"
-        \"/outbound /outbound/index.html 200\\n\"
-        \"/outbound/ /outbound/index.html 200\\n\"
-        \"/outbound/* /outbound/index.html 200\\n\"
-        \"/* /index.html 200\\n\"
+        "/links.json /links.json 200\n"
+        "/shortlinks/links.json /links.json 200\n"
+        "/outbound/generate /outbound/generate/index.html 200\n"
+        "/outbound/generate/ /outbound/generate/index.html 200\n"
+        "/outbound/generate/* /outbound/generate/index.html 200\n"
+        "/outbound /outbound/index.html 200\n"
+        "/outbound/ /outbound/index.html 200\n"
+        "/outbound/* /outbound/index.html 200\n"
+        "/* /index.html 200\n"
     )
-    (DIST_DIR / \"_redirects\").write_text(redirects, encoding=\"utf-8\")
+    (DIST_DIR / "_redirects").write_text(redirects, encoding="utf-8")
 
 
 if __name__ == "__main__":
