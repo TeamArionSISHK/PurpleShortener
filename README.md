@@ -62,18 +62,11 @@ Example:
 - `home` becomes `shortlinks/dist/home/index.html` and will serve at `https://go.teamarion.org/home` on Cloudflare Pages.
 
 ## Deployment (Cloudflare Pages)
-Deployment is handled by GitHub Actions on every push to `main`.
+Cloudflare handles deployment via its Git integration. GitHub Actions only runs the build on each push to `main`.
 
 Workflow highlights:
 - Installs Python dependencies
 - Runs `shortlinks/build.py`
-- Deploys `shortlinks/dist` to Cloudflare Pages
-
-Required GitHub secrets:
-- `CF_API_TOKEN`
-- `CF_ACCOUNT_ID`
-
-Set the Cloudflare Pages project name in `.github/workflows/deploy.yml` (`projectName`).
 
 ## Outbound Warning (Standalone)
 The outbound warning page is a static, standalone artifact in `outbound/` and does not require GitHub Actions.

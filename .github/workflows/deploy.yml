@@ -1,11 +1,11 @@
-name: Deploy
+name: Build
 
 on:
   push:
     branches: [main]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,10 +16,3 @@ jobs:
         run: pip install -r shortlinks/requirements.txt
       - name: Build
         run: python shortlinks/build.py
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: go-teamarion
-          directory: shortlinks/dist
