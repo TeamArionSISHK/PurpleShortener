@@ -42,22 +42,23 @@
         backdrop-filter: blur(8px);
       }
       .logo {
-        width: 44px;
-        height: 44px;
+        width: min(120px, 32vw);
+        height: auto;
         object-fit: contain;
         display: block;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
       }
       h1 {
-        margin: 0 0 12px;
-        font-size: 28px;
+        margin: 0 0 10px;
+        font-size: clamp(26px, 4vw, 32px);
         font-weight: 700;
         letter-spacing: 0.4px;
       }
-      .warning {
-        color: var(--ice-blue);
-        font-weight: 600;
-        margin-bottom: 24px;
+      .body-copy {
+        color: rgba(246, 244, 255, 0.85);
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 22px;
       }
       .label {
         text-transform: uppercase;
@@ -67,7 +68,7 @@
         margin-bottom: 8px;
       }
       .domain {
-        font-size: 24px;
+        font-size: clamp(20px, 3.2vw, 26px);
         font-weight: 700;
         word-break: break-all;
         margin-bottom: 6px;
@@ -116,28 +117,37 @@
         opacity: 0.5;
         box-shadow: none;
       }
-      .note {
-        margin-top: 20px;
-        font-size: 13px;
-        color: rgba(246, 244, 255, 0.6);
+      @media (max-width: 520px) {
+        .card {
+          padding: 26px 22px;
+        }
+        .actions {
+          flex-direction: column;
+        }
+        .btn {
+          width: 100%;
+        }
       }
     </style>
   </head>
   <body>
     <main class="card">
       <img class="logo" src="logo.png" alt="Team Arion">
-      <h1>External Redirect</h1>
-      <div class="warning">You are leaving Team Arion’s site.</div>
+      <h1>You are leaving Team Arion’s website</h1>
+      <div class="body-copy">
+        You are about to visit an external website that is not operated or controlled by Team Arion.
+        We provide this link for convenience, but we are not responsible for the content, security, or
+        privacy practices of external sites.
+      </div>
 
-      <div class="label">Destination</div>
+      <div class="label">Destination:</div>
       <div class="domain" id="dest-domain">Unknown</div>
       <div class="url" id="dest-url">Provide a valid destination.</div>
 
       <div class="actions">
-        <a class="btn btn-primary" id="continue" href="#" aria-disabled="true">Continue</a>
-        <a class="btn btn-secondary" href="https://www.teamarion.org">Go Back</a>
+        <a class="btn btn-primary" id="continue" href="#" aria-disabled="true">Continue to site</a>
+        <a class="btn btn-secondary" href="https://www.teamarion.org">Go back</a>
       </div>
-      <div class="note">Only continue if you trust the destination.</div>
     </main>
 
     <script>
