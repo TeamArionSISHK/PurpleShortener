@@ -7,8 +7,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -16,3 +20,14 @@ jobs:
         run: pip install -r shortlinks/requirements.txt
       - name: Build
         run: python shortlinks/build.py
+      - name: Commit build output
+        run: |
+          if git status --porcelain | grep -q .; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A index.html _redirects shortlinks/links.json
+            git commit -m "chore: build shortlinks [skip ci]"
+            git push
+          else
+            echo "No build changes to commit"
+          fi

@@ -64,11 +64,12 @@ Example:
 - `home` becomes `https://go.teamarion.org/home` via the router page.
 
 ## Deployment (Cloudflare Pages)
-Cloudflare handles deployment via its Git integration. GitHub Actions only runs the build on each push to `main`.
+Cloudflare serves the repo root. GitHub Actions runs the build on each push to `main` and commits the generated files back to the repository.
 
 Workflow highlights:
 - Installs Python dependencies
 - Runs `shortlinks/build.py`
+- Commits `index.html`, `_redirects`, and `shortlinks/links.json`
 
 ## Outbound Warning (Standalone)
 The outbound warning page is a static, standalone artifact in `outbound/` and does not require GitHub Actions.
