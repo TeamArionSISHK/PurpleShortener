@@ -55,7 +55,7 @@ def load_links() -> dict:
 def render(template: str, values: dict) -> str:
     output = template
     for key, value in values.items():
-        output = output.replace(f\"{{{{{key}}}}}\", value)
+        output = output.replace(f"{{{{{key}}}}}", value)
     return output
 
 
