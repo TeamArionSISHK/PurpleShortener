@@ -1,6 +1,17 @@
 # PurpleShortener
 Team Arion's URL shortening web infrastructure.
 
+> [!TIP]
+> ***How to use?***
+> 
+> **Short links:** Edit `shortlinks/links.yaml`, push to `main`, and wait a few minutes for Cloudflare to rebuild.  
+> **Outbound links:** Use `https://go.teamarion.org/outbound/?to=<URL>` to generate a site-leaving warning page.
+> 
+> Changes usually appear after the next deploy finishes.
+
+> [!NOTE]
+> This service is for Team Arion members only. 
+
 ## Overview
 This repo builds a static short link site for Cloudflare Pages. Redirects are defined in `shortlinks/links.yaml` and compiled into a router page at the repo root plus a lookup table in `shortlinks/links.json` by `shortlinks/build.py`.
 
@@ -43,8 +54,8 @@ home:
   url: https://teamarion.org
   title: Team Arion
 
-pit:
-  url: https://teamarion.org/pit-display
+instagram:
+  url: https://www.instagram.com/teamarionhk/
 ```
 
 Rules:
@@ -76,10 +87,6 @@ Cloudflare Pages settings:
 - Build output directory: `.`
 - Root directory (advanced): leave blank
 
-> **Tip (Non-Technical TL;DR)**  
-> Edit `shortlinks/links.yaml`, push to `main`, and wait a few minutes for Cloudflare to rebuild.  
-> Changes usually appear after the next deploy finishes.
-
 ## Outbound Warning (Standalone)
 The outbound warning page is a static, standalone artifact in `outbound/` and does not require GitHub Actions.
 
@@ -88,7 +95,6 @@ Usage:
 - Example: `https://go.teamarion.org/outbound/https%3A%2F%2Fexample.com`
 
 Notes:
-- Add `logo.png` to `outbound/` to display the Team Arion logo.
 - The page only allows `http` and `https` destinations.
 - `?to=` query parameter is also supported as a fallback.
 
