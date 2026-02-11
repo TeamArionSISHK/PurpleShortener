@@ -4,9 +4,16 @@ home:
 
 instagram:
   url: https://www.instagram.com/teamarionhk/
+  title: Team Arion Instagram (@teamarionhk)
 
 test:
   url: https://mkyu.one/
+  title: test
 
 brand:
   url: https://brand.teamarion.org/
+  title: Team Arion Brand Centre
+
+in:
+  url: https://www.linkedin.com/company/teamarion/
+  title: Team Arion LinkedIn
