@@ -9,3 +9,7 @@ brand:
 in:
   url: https://www.linkedin.com/company/teamarion/
   title: Team Arion LinkedIn
+
+open:
+  url: https://www.teamarion.org/engineering/open-source
+  title: Team Arion Open Source
