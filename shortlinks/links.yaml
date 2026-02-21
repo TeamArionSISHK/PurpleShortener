@@ -13,3 +13,7 @@ in:
 open:
   url: https://www.teamarion.org/engineering/open-source
   title: Team Arion Open Source
+
+confluence:
+  url: https://www.teamarion.org/engineering/civ
+  title: Confluence/25P Interactive Viewer
