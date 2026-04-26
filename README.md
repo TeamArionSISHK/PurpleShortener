@@ -1,5 +1,6 @@
 # PurpleShortener
-Team Arion's URL shortening web infrastructure.
+Team Arion's URL shortener. 
+It works by compiling a static site with a redirecting router. The static site is hosted on Cloudflare Pages.
 
 > [!TIP]
 > ***How to use?***
