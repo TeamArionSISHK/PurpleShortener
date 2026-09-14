@@ -29,3 +29,7 @@ srwf25-report:
 ask:
   url: https://ask.teamarion.org/
   title: Ask Arion by Team Arion
+
+visit-wf:
+  url: https://wf26reg.stemracing.com/visitors
+  title: Register as a visitor for STEM Racing World Finals Singapore 2026
